@@ -1,17 +1,37 @@
 package br.com.zenon;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.math.BigDecimal;
+import java.util.List;
+
 public class Main {
     static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
+        List<Transaction> transactions = getTransactions();
+        for (int i = 0; i < transactions.size(); i++) {
+            IO.println("Transação:" + (i+1));
+            IO.println("step:" + transactions.get(i).step());
+            IO.println("type:" + transactions.get(i).type().name());
+            IO.println("amount:" + transactions.get(i).amount());
+            IO.println("nameOrig:" + transactions.get(i).nameOrig());
+            IO.println("oldbalanceOrig:" + transactions.get(i).oldbalanceOrig());
+            IO.println("newbalanceOrig:" + transactions.get(i).newbalanceOrig());
+            IO.println("nameDest:" + transactions.get(i).nameDest());
+            IO.println("oldbalanceDest:" + transactions.get(i).oldbalanceOrig());
+            IO.println("newbalanceDest:" + transactions.get(i).newbalanceDest());
+            IO.println("isFraud:" + (transactions.get(i).isFraud() ? 1 : 0));
+            IO.println("isFlaggedFraud:" + (transactions.get(i).isFlaggedFraud() ? 1 : 0)+ "\n");
         }
+    }
+
+    private static List<Transaction> getTransactions() {
+        Transaction transaction1 = new Transaction(1, TransactionType.PAYMENT, new BigDecimal("9839.64"),
+                "C1231006815", new BigDecimal("170136.0"),new BigDecimal("160296.36"),
+                "M1979787155",0.0,0.0, false, false);
+
+        Transaction transaction2 = new Transaction(743, TransactionType.CASH_OUT, new BigDecimal("850002.52"),
+                "C1280323807", new BigDecimal("850002.52"),new BigDecimal("0.0"),
+                "C873221189",6510099.11,7360101.63, true, false);
+
+        return List.of(transaction1, transaction2);
     }
 }
